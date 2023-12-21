@@ -1,0 +1,9 @@
+<div class="sidebar-footer">
+  <ul class="sidebar-footer__list">
+    {% for link in linklists['sidebar-footer'].links %}
+      <li class="sidebar-footer__item">
+        <a class="sidebar-footer__link" href="{{ link.url }}">{{ link.title }}</a>
+      </li>
+    {% endfor %}
+  </ul>
+</div>

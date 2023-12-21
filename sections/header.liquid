@@ -1,0 +1,83 @@
+{{ 'section-header.css' | asset_url | stylesheet_tag }}
+{{ 'component-header-nav.css' | asset_url | stylesheet_tag }}
+{{ 'component-sidebar-nav.css' | asset_url | stylesheet_tag }}
+
+<div class="header">
+  <a href="/" class="header__logo">
+    <img src="{{ section.settings.logo | image_url }}" alt="Wandler">
+  </a>
+  <div class="header__nav-wrapper">
+    <div class="nav">
+      <ul class="nav__list">
+        {% for link in linklists.header-menu.links %}
+          {%- render 'header-menu', link: link -%}
+        {% endfor %}
+      </ul>
+      <div class="nav__icons">
+        <div class="nav__icon">
+          <a href="/">{%- render 'icon-search' -%}</a>
+        </div>
+        <div class="nav__icon nav__icon--user">
+          <a href="/">{%- render 'icon-user' -%}</a>
+        </div>
+        <div class="nav__icon nav__icon--cart">
+          <a href="/">{%- render 'icon-cart' -%}</a>
+        </div>
+        <div class="nav__icon nav__icon--cart-desktop">
+          <a href="/">
+            {%- render 'icon-cart-desktop' -%}
+          </a>
+        </div>
+        <div class="nav__icon nav__icon--burger">
+          <a href="/">{%- render 'icon-burger-menu' -%}</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Header",
+  "tag": "header",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo"
+    },
+    {
+      "type": "range",
+      "id": "logo_width",
+      "label": "Logo width",
+      "default": 100,
+      "min": 20,
+      "max": 300,
+      "step": 5
+    },
+    {
+      "type": "link_list",
+      "id": "header-menu",
+      "label": "Header menu",
+      "default": "main-menu"
+    },
+    {
+      "type": "link_list",
+      "id": "sidebar-menu",
+      "label": "Sidebar menu",
+      "default": "main-menu"
+    },
+    {
+      "type": "link_list",
+      "id": "sidebar-footer",
+      "label": "Sidebar footer",
+      "default": "main-menu"
+    }
+  ]
+}
+{% endschema %}

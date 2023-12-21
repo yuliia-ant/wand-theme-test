@@ -1,0 +1,119 @@
+@mixin onDesktop {
+  @media (min-width: 1024px) {
+    @content;
+  }
+}
+
+$animationDuration: 0.5s;
+
+@mixin hover($property, $toValue) {
+  transition: #{$property} $animationDuration;
+  &:hover {
+    #{$property}: $toValue;
+  }
+}
+
+.nav {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+
+  &__list {
+    display: none;
+
+    @include onDesktop() {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      height: 100%;
+    }
+  }
+
+  &__item {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    padding: 0 16px;
+  }
+
+  &__link {
+    text-decoration: none;
+    position: relative;
+
+    &:after {
+      background: none repeat scroll 0 0 transparent;
+      bottom: -3px;
+      content: "";
+      display: block;
+      height: 1px;
+      position: absolute;
+      background: #000;
+      width: 100%;
+      opacity: 0;
+    }
+
+    &:hover:after {
+      opacity: 1;
+      transition: opacity 0.1s linear;
+      -moz-transition: opacity 0.1s linear;
+      -webkit-transition: opacity 0.1s linear;
+    }
+  }
+
+  &__icons {
+    display: flex;
+    flex-direction: row;
+    column-gap: 25px;
+  }
+
+  &__icon {
+    display: flex;
+    align-items: center;
+    height: 15px;
+
+    &:hover {
+      opacity: 0.5;
+      transition: opacity 0.1s linear;
+      -moz-transition: opacity 0.1s linear;
+      -webkit-transition: opacity 0.1s linear;
+    }
+
+    &--burger {
+      @include onDesktop() {
+        display: none;
+      }
+    }
+    &--user {
+      display: none;
+      @include onDesktop() {
+        display: block;
+      }
+    }
+
+    &--cart {
+      @include onDesktop() {
+        display: none;
+      }
+    }
+
+    &--cart-desktop {
+      display: none;
+      @include onDesktop() {
+        display: block;
+      }
+    }
+  }
+
+  &__icon a {
+    height: 100%;
+  }
+
+  &__icon.nav__icon--cart a {
+    padding-bottom: 6px;
+  }
+}
