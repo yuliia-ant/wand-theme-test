@@ -35,6 +35,23 @@
     </div>
   </div>
 </div>
+<div class="sidebar-nav-wrapper">
+  <div class="sidebar-nav">
+    <ul class="sidebar-nav__list">
+      {% for link in linklists.sidebar-menu.links %}
+        {%- render 'sidebar-nav', link: link -%}
+      {% endfor %}
+    </ul>
+  </div>
+  <div class="sidebar-footer">
+    <ul class="sidebar-footer__list">
+      {% for link in linklists.sidebar-footer.links %}
+        <li class="sidebar-footer__item">
+          <a class="sidebar-footer__link" href="{{ link.url }}">{{ link.title }}</a></li>
+      {% endfor %}
+    </ul>
+  </div>
+</div>
 
 {% schema %}
 {
