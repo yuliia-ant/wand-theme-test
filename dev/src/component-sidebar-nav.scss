@@ -9,29 +9,54 @@
   flex-direction: column;
   justify-content: space-between;
   height: calc(100vh - 50px);
-  padding: 0 15px;
+  min-height: min-content;
   background-color: #fff;
+  opacity: 0;
+}
 
-  @include onDesktop() {
-    padding: 0 40px;
-  }
+.nav-active {
+  opacity: 1;
 }
 
 .sidebar-nav {
-  padding-top: 15px;
-
-  &__link-container {
-    display: flex;
-    justify-content: space-between;
-  }
+  padding: 15px;
 
   &__item {
+    display: flex;
+    align-items: center;
+    width: 100%;
     height: 40px;
   }
 
   &__link {
+    width: 100%;
+    &-container {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    &__child-list {
+      display: flex;
+      flex-direction: column;
+    }
+
+    &__child-item {
+      display: flex;
+      align-items: center;
+      height: 40px;
+    }
+
     &__child-list.hidden {
       display: none;
     }
+  }
+}
+
+.sidebar-footer {
+  border-top: 1px solid #7070703a;
+  padding: 15px;
+
+  &__item {
+    height: 40px;
   }
 }

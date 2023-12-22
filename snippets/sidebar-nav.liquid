@@ -2,7 +2,9 @@
   <a class="sidebar-nav__link" href="{{ link.url }}">
     <div class="sidebar-nav__link-container">
       {{ link.title }}
-      {%- render 'icon-arrow-right' -%}
+      {% if link.links != blank %}
+        {%- render 'icon-arrow-right' -%}
+      {% endif %}
     </div>
   </a>
 </li>

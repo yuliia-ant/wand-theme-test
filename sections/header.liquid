@@ -53,6 +53,17 @@
   </div>
 </div>
 
+<script>
+  document.querySelector('.nav__icon--burger').addEventListener('click', (event) => {
+    event.preventDefault();
+    document.querySelector('.sidebar-nav-wrapper').classList.toggle('nav-active');
+  });
+
+  // document.querySelector('.header-nav-overlay').addEventListener('click', () => {
+  //   document.querySelector('.header').classList.remove('nav-active');
+  // });
+</script>
+
 {% schema %}
 {
   "name": "Header",
