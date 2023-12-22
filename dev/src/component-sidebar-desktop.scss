@@ -1,5 +1,18 @@
+@mixin onDesktop {
+  @media (min-width: 1024px) {
+    @content;
+  }
+}
+
 .sidebar-nav-wrapper--desktop {
-  height: 100vh;
+  display: none;
+  @include onDesktop() {
+    height: 100vh;
+  }
+}
+
+.sidebar-nav-wrapper--desktop.nav-active {
+  display: block;
 }
 
 .sidebar-nav-overlay--desktop {
@@ -44,6 +57,7 @@
     &-container {
       display: flex;
       justify-content: space-between;
+      padding: 0 97px 0 0;
     }
 
     &__child-list {
@@ -59,6 +73,10 @@
 
     &__child-list.hidden {
       display: none;
+    }
+
+    &-container:hover {
+      font-weight: 500;
     }
   }
   &__link__child-list.hidden {
