@@ -3,148 +3,152 @@
 {{ 'component-sidebar-nav.css' | asset_url | stylesheet_tag }}
 {{ 'component-sidebar-desktop.css' | asset_url | stylesheet_tag }}
 
-<div class="header">
-  <a href="/" class="header__logo">
-    <img src="{{ section.settings.logo | image_url }}" alt="Wandler">
-  </a>
-  <div class="header__nav-wrapper">
-    <div class="nav">
-      <ul class="nav__list">
-        {% for link in linklists['header-menu'].links %}
-          <li class="nav__item">
-            <a class="nav__link nav__link--{{ link.title }}" href="{{ link.url }}">
-              {{ link.title }}
+<sidebar-toggle class="wrap" id="sidebar-toggle-template">
+  <div class="header">
+    <a href="/" class="header__logo">
+      <img src="{{ section.settings.logo | image_url }}" alt="Wandler">
+    </a>
+    <div class="header__nav-wrapper">
+      <div class="nav">
+        <ul class="nav__list">
+          {% for link in linklists['header-menu'].links %}
+            <li class="nav__item">
+              <a class="nav__link nav__link--{{ link.title }}" href="{{ link.url }}">
+                {{ link.title }}
+              </a>
+            </li>
+          {% endfor %}
+        </ul>
+        <div class="nav__icons">
+          <div class="nav__icon nav__icon--search">
+            <a href="/">{%- render 'icon-search' -%}</a>
+          </div>
+          <div class="nav__icon nav__icon--user">
+            <a href="/">{%- render 'icon-user' -%}</a>
+          </div>
+          <div class="nav__icon nav__icon--cart">
+            <a href="/">{%- render 'icon-cart' -%}</a>
+          </div>
+          <div class="nav__icon nav__icon--cart-desktop">
+            <a href="/">
+              {%- render 'icon-cart-desktop' -%}
             </a>
+          </div>
+          <div class="nav__icon nav__icon--burger">
+            <a href="/">{%- render 'icon-burger-menu' -%}</a>
+          </div>
+          <div class="nav__icon nav__icon--close nav__icon--js-hidden">
+            <a href="/">{%- render 'icon-close' -%}</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="sidebar-nav-wrapper--mobile">
+    <div class="sidebar-nav">
+      <ul class="sidebar-nav__list">
+        {% for link in linklists['sidebar-menu'].links %}
+          {%- render 'sidebar-nav', link: link -%}
+        {% endfor %}
+      </ul>
+    </div>
+    <div class="sidebar-footer">
+      <ul class="sidebar-footer__list">
+        {% for link in linklists['sidebar-footer'].links %}
+          <li class="sidebar-footer__item">
+            <a class="sidebar-footer__link" href="{{ link.url }}">{{ link.title }}</a>
           </li>
         {% endfor %}
       </ul>
-      <div class="nav__icons">
-        <div class="nav__icon nav__icon--search">
-          <a href="/">{%- render 'icon-search' -%}</a>
-        </div>
-        <div class="nav__icon nav__icon--user">
-          <a href="/">{%- render 'icon-user' -%}</a>
-        </div>
-        <div class="nav__icon nav__icon--cart">
-          <a href="/">{%- render 'icon-cart' -%}</a>
-        </div>
-        <div class="nav__icon nav__icon--cart-desktop">
-          <a href="/">
-            {%- render 'icon-cart-desktop' -%}
-          </a>
-        </div>
-        <div class="nav__icon nav__icon--burger">
-          <a href="/">{%- render 'icon-burger-menu' -%}</a>
-        </div>
-        <div class="nav__icon nav__icon--close nav__icon--js-hidden">
+    </div>
+  </div>
+  <div class="sidebar-nav-wrapper--desktop">
+    <div class="sidebar-desktop" id="sidebar-menu-desktop">
+      <div class="sidebar-nav-desktop">
+        <div class="nav__icon nav__icon--close--desktop">
           <a href="/">{%- render 'icon-close' -%}</a>
         </div>
+        <ul class="sidebar-nav-desktop__list">
+          {% for link in linklists['sidebar-menu'].links %}
+            <li class="sidebar-nav-desktop__item">
+              <a class="sidebar-nav-desktop__link" href="{{ link.url }}">
+                <div class="sidebar-nav-desktop__link-container">
+                  {{ link.title }}
+                  {% if link.links != blank %}
+                    {%- render 'icon-arrow-right' -%}
+                  {% endif %}
+                </div>
+              </a>
+            </li>
+            {% if link.links != blank %}
+              <ul class="sidebar-nav-desktop__link__child-list hidden">
+                {% for child_link in link.links %}
+                  <li class="sidebar-nav-desktop__link__child-item">
+                    <a href="{{ child_link.url }}" class="sidebar-nav-desktop__link__child-link">
+                      {{- child_link.title -}}
+                    </a>
+                  </li>
+                {% endfor %}
+              </ul>
+            {% endif %}
+          {% endfor %}
+        </ul>
+      </div>
+      <div class="sidebar-footer-desktop">
+        <ul class="sidebar-footer-desktop__list">
+          {% for link in linklists['sidebar-footer'].links %}
+            <li class="sidebar-footer-desktop__item">
+              <a class="sidebar-footer-desktop__link" href="{{ link.url }}">{{ link.title }}</a>
+            </li>
+          {% endfor %}
+        </ul>
       </div>
     </div>
+    <div class="sidebar-nav-overlay--desktop" id="sidebar-nav-overlay--desktop"></div>
   </div>
-</div>
-<div class="sidebar-nav-wrapper--mobile">
-  <div class="sidebar-nav">
-    <ul class="sidebar-nav__list">
-      {% for link in linklists['sidebar-menu'].links %}
-        {%- render 'sidebar-nav', link: link -%}
-      {% endfor %}
-    </ul>
-  </div>
-  <div class="sidebar-footer">
-    <ul class="sidebar-footer__list">
-      {% for link in linklists['sidebar-footer'].links %}
-        <li class="sidebar-footer__item">
-          <a class="sidebar-footer__link" href="{{ link.url }}">{{ link.title }}</a>
-        </li>
-      {% endfor %}
-    </ul>
-  </div>
-</div>
-<div class="sidebar-nav-wrapper--desktop">
-  <div class="sidebar-desktop" id="sidebar-menu-desktop">
-    <div class="sidebar-nav-desktop">
-      <div class="nav__icon nav__icon--close--desktop">
-        <a href="/">{%- render 'icon-close' -%}</a>
-      </div>
-      <ul class="sidebar-nav-desktop__list">
-        {% for link in linklists['sidebar-menu'].links %}
-          <li class="sidebar-nav-desktop__item">
-            <a class="sidebar-nav-desktop__link" href="{{ link.url }}">
-              <div class="sidebar-nav-desktop__link-container">
-                {{ link.title }}
-                {% if link.links != blank %}
-                  {%- render 'icon-arrow-right' -%}
-                {% endif %}
-              </div>
-            </a>
-          </li>
-          {% if link.links != blank %}
-            <ul class="sidebar-nav-desktop__link__child-list hidden">
-              {% for child_link in link.links %}
-                <li class="sidebar-nav-desktop__link__child-item">
-                  <a href="{{ child_link.url }}" class="sidebar-nav-desktop__link__child-link">
-                    {{- child_link.title -}}
-                  </a>
-                </li>
-              {% endfor %}
-            </ul>
-          {% endif %}
-        {% endfor %}
-      </ul>
-    </div>
-    <div class="sidebar-footer-desktop">
-      <ul class="sidebar-footer-desktop__list">
-        {% for link in linklists['sidebar-footer'].links %}
-          <li class="sidebar-footer-desktop__item">
-            <a class="sidebar-footer-desktop__link" href="{{ link.url }}">{{ link.title }}</a>
-          </li>
-        {% endfor %}
-      </ul>
-    </div>
-  </div>
-  <div class="sidebar-nav-overlay--desktop" id="sidebar-nav-overlay--desktop"></div>
-</div>
+</sidebar-toggle>
+
+<script src="{{ 'section-header.js' | asset_url }}" defer></script>
 
 <script>
-  function toggleIconsClasses() {
-    document.querySelector('.sidebar-nav-wrapper--mobile').classList.toggle('nav-active');
-    let cls = document.querySelectorAll('.nav__icon');
-    cls.forEach((cl) => cl.classList.toggle('nav__icon--js-hidden'));
-  }
+  // function toggleIconsClasses() {
+  //   document.querySelector('.sidebar-nav-wrapper--mobile').classList.toggle('nav-active');
+  //   let cls = document.querySelectorAll('.nav__icon');
+  //   cls.forEach((cl) => cl.classList.toggle('nav__icon--js-hidden'));
+  // }
 
-  document.querySelector('.nav__icon--burger').addEventListener('click', (event) => {
-    event.preventDefault();
-    toggleIconsClasses();
-    document.querySelector('.nav__icon--close').classList.toggle('close-active');
-  });
+  // document.querySelector('.nav__icon--burger').addEventListener('click', (event) => {
+  //   event.preventDefault();
+  //   toggleIconsClasses();
+  //   document.querySelector('.nav__icon--close').classList.toggle('close-active');
+  // });
 
-  document.querySelector('.nav__icon--close').addEventListener('click', (event) => {
-    event.preventDefault();
-    toggleIconsClasses();
-  });
+  // document.querySelector('.nav__icon--close').addEventListener('click', (event) => {
+  //   event.preventDefault();
+  //   toggleIconsClasses();
+  // });
 
-  document.querySelector('.nav__link--Shop').addEventListener('click', (event) => {
-    event.preventDefault();
-    openNav();
-    document.querySelector('.sidebar-nav-wrapper--desktop').classList.toggle('nav-active');
-  });
+  // document.querySelector('.nav__link--Shop').addEventListener('click', (event) => {
+  //   event.preventDefault();
+  //   openNav();
+  //   document.querySelector('.sidebar-nav-wrapper--desktop').classList.toggle('nav-active');
+  // });
 
-  document.querySelector('.nav__icon--close--desktop').addEventListener('click', (event) => {
-    event.preventDefault();
-    closeNav();
-    document.querySelector('.sidebar-nav-wrapper--desktop').classList.toggle('nav-active');
-  });
+  // document.querySelector('.nav__icon--close--desktop').addEventListener('click', (event) => {
+  //   event.preventDefault();
+  //   closeNav();
+  //   document.querySelector('.sidebar-nav-wrapper--desktop').classList.toggle('nav-active');
+  // });
 
-  function openNav() {
-    document.getElementById('sidebar-menu-desktop').style.left = '0';
-    document.getElementById('sidebar-nav-overlay--desktop').style.display = 'block';
-  }
+  // function openNav() {
+  //   document.getElementById('sidebar-menu-desktop').style.left = '0';
+  //   document.getElementById('sidebar-nav-overlay--desktop').style.display = 'block';
+  // }
 
-  function closeNav() {
-    document.getElementById('sidebar-menu-desktop').style.left = '-100%';
-    document.getElementById('sidebar-nav-overlay--desktop').style.display = 'none';
-  }
+  // function closeNav() {
+  //   document.getElementById('sidebar-menu-desktop').style.left = '-100%';
+  //   document.getElementById('sidebar-nav-overlay--desktop').style.display = 'none';
+  // }
 
   // document.querySelector('.header-nav-overlay').addEventListener('click', () => {
   //   document.querySelector('.header').classList.remove('nav-active');
