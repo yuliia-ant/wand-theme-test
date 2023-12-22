@@ -14,7 +14,7 @@
         {% endfor %}
       </ul>
       <div class="nav__icons">
-        <div class="nav__icon">
+        <div class="nav__icon nav__icon--search">
           <a href="/">{%- render 'icon-search' -%}</a>
         </div>
         <div class="nav__icon nav__icon--user">
@@ -30,6 +30,9 @@
         </div>
         <div class="nav__icon nav__icon--burger">
           <a href="/">{%- render 'icon-burger-menu' -%}</a>
+        </div>
+        <div class="nav__icon nav__icon--close nav__icon--js-hidden">
+          <a href="/">{%- render 'icon-close' -%}</a>
         </div>
       </div>
     </div>
@@ -57,7 +60,17 @@
   document.querySelector('.nav__icon--burger').addEventListener('click', (event) => {
     event.preventDefault();
     document.querySelector('.sidebar-nav-wrapper').classList.toggle('nav-active');
+    let cls = document.querySelectorAll('.nav__icon');
+    cls.forEach(cl => cl.classList.toggle('nav__icon--js-hidden'));
+    document.querySelector('.nav__icon--close').classList.toggle('close-active');
   });
+
+  document.querySelector('.nav__icon--close').addEventListener('click', (event) => {
+    event.preventDefault();
+    document.querySelector('.sidebar-nav-wrapper').classList.toggle('nav-active');
+    let cls = document.querySelectorAll('.nav__icon');
+    cls.forEach(cl => cl.classList.toggle('nav__icon--js-hidden'));
+  })
 
   // document.querySelector('.header-nav-overlay').addEventListener('click', () => {
   //   document.querySelector('.header').classList.remove('nav-active');

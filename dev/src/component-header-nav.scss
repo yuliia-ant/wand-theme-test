@@ -68,6 +68,7 @@ $animationDuration: 0.5s;
   &__icons {
     display: flex;
     flex-direction: row;
+    align-items: center;
     column-gap: 25px;
   }
 
@@ -106,6 +107,23 @@ $animationDuration: 0.5s;
       @include onDesktop() {
         display: block;
       }
+    }
+
+    &--close {
+      height: 11px;
+      display: block;
+    }
+
+    &--close.close-active {
+      display: block;
+    }
+
+    &--js-hidden {
+      display: none;
+    }
+
+    &--close.nav__icon--js-hidden {
+      display: none;
     }
   }
 
