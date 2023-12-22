@@ -4,7 +4,7 @@
   }
 }
 
-.sidebar-nav-wrapper {
+.sidebar-nav-wrapper--mobile {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -12,6 +12,10 @@
   min-height: min-content;
   background-color: #fff;
   opacity: 0;
+
+  @include onDesktop() {
+    display: none;
+  }
 }
 
 .nav-active {
