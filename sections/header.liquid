@@ -62,7 +62,7 @@
   </div>
 </div>
 <div class="sidebar-nav-wrapper--desktop">
-  <div class="sidebar-desktop">
+  <div class="sidebar-desktop" id="sidebar-menu-desktop">
     <div class="sidebar-nav-desktop">
       <div class="nav__icon nav__icon--close--desktop">
         <a href="/">{%- render 'icon-close' -%}</a>
@@ -103,7 +103,7 @@
       </ul>
     </div>
   </div>
-  <div class="sidebar-nav-overlay--desktop"></div>
+  <div class="sidebar-nav-overlay--desktop" id="sidebar-nav-overlay--desktop"></div>
 </div>
 
 <script>
@@ -126,13 +126,25 @@
 
   document.querySelector('.nav__link--Shop').addEventListener('click', (event) => {
     event.preventDefault();
+    openNav();
     document.querySelector('.sidebar-nav-wrapper--desktop').classList.toggle('nav-active');
   });
 
   document.querySelector('.nav__icon--close--desktop').addEventListener('click', (event) => {
     event.preventDefault();
+    closeNav();
     document.querySelector('.sidebar-nav-wrapper--desktop').classList.toggle('nav-active');
   });
+
+  function openNav() {
+    document.getElementById('sidebar-menu-desktop').style.left = '0';
+    document.getElementById('sidebar-nav-overlay--desktop').style.display = 'block';
+  }
+
+  function closeNav() {
+    document.getElementById('sidebar-menu-desktop').style.left = '-100%';
+    document.getElementById('sidebar-nav-overlay--desktop').style.display = 'none';
+  }
 
   // document.querySelector('.header-nav-overlay').addEventListener('click', () => {
   //   document.querySelector('.header').classList.remove('nav-active');

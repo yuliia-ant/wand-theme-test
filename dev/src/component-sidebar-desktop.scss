@@ -5,14 +5,15 @@
 }
 
 .sidebar-nav-wrapper--desktop {
-  display: none;
+  // display: none;
   @include onDesktop() {
-    height: 100vh;
+    // height: 100vh;
   }
 }
 
 .sidebar-nav-wrapper--desktop.nav-active {
-  display: block;
+  // display: block;
+  // width: 100%;
 }
 
 .sidebar-nav-overlay--desktop {
@@ -24,6 +25,7 @@
   opacity: 26%;
   background-color: #000;
   z-index: 100;
+  display: none;
 }
 
 .sidebar-desktop {
@@ -38,6 +40,14 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+
+  overflow: hidden;
+
+  transition: all .4s;
+  left: -100%;
+}
+
+.nav-active .sidebar-desktop {
 }
 
 .sidebar-nav-desktop {
