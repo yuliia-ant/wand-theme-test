@@ -97,6 +97,7 @@ $animationDuration: 0.5s;
     }
 
     &--cart {
+      margin-bottom: 6px;
       @include onDesktop() {
         display: none;
       }
