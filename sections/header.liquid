@@ -48,7 +48,41 @@
     <div class="sidebar-nav">
       <ul class="sidebar-nav__list">
         {% for link in linklists['sidebar-menu'].links %}
-          {%- render 'sidebar-nav', link: link -%}
+          <li class="sidebar-nav__item">
+            <a
+              class="sidebar-nav__link {% if link.links != blank %}js-sidebar-nav__link{% endif %}"
+              href="{{ link.url }}"
+            >
+              <div class="sidebar-nav__link-container">
+                {{ link.title }}
+                {% if link.links != blank %}
+                  {%- render 'icon-arrow-right' -%}
+                {% endif %}
+              </div>
+            </a>
+            {% if link.links != blank %}
+              <div class="secondary-menu js-secondary-menu">
+                <div class="secondary-menu__top-bar">
+                  <button class="secondary-menu__top-bar--back js-secondary-menu__top-bar--back">
+                    {% render 'icon-arrow-left' %}
+                  </button>
+                  <h4 class="secondary-menu__top-bar--heading">{{ link.title }}</h4>
+                  <button class="secondary-menu__top-bar--close js-secondary-menu__top-bar--close">
+                    {%- render 'icon-close' -%}
+                  </button>
+                </div>
+                <ul class="secondary-menu__list">
+                  {% for child_link in link.links %}
+                    <li class="secondary-menu__item">
+                      <a href="{{ child_link.url }}" class="secondary-menu__link">
+                        {{- child_link.title -}}
+                      </a>
+                    </li>
+                  {% endfor %}
+                </ul>
+              </div>
+            {% endif %}
+          </li>
         {% endfor %}
       </ul>
     </div>
@@ -111,6 +145,30 @@
 <script src="{{ 'section-header.js' | asset_url }}" defer></script>
 
 <script>
+  // const links = document.querySelectorAll('.js-sidebar-nav__link');
+  // links.forEach((link) =>
+  //   link.addEventListener('click', (event) => {
+  //     event.preventDefault();
+  //     link.nextElementSibling.classList.toggle('secondary-menu-open');
+  //   })
+  // );
+
+  // const backButtons = document.querySelectorAll('.js-secondary-menu__top-bar--back');
+  // backButtons.forEach((backButton) =>
+  //   backButton.addEventListener('click', (event) => {
+  //     event.preventDefault();
+  //     event.stopPropagation();
+  //     document.querySelector('.secondary-menu-open').classList.toggle('secondary-menu-open');
+  //   })
+  // );
+
+  // const closeButtons = document.querySelectorAll('.js-secondary-menu__top-bar--close');
+  // closeButtons.forEach((closeButton) =>
+  //   closeButton.addEventListener('click', (event) => {
+  //     event.preventDefault();
+  //     toggleIconsClasses();
+  //   })
+  // );
   // function toggleIconsClasses() {
   //   document.querySelector('.sidebar-nav-wrapper--mobile').classList.toggle('nav-active');
   //   let cls = document.querySelectorAll('.nav__icon');
