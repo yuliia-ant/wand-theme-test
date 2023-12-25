@@ -100,16 +100,25 @@
 // customElements.define("sidebar-toggle", SidebarToggle);
 
 class SidebarToggle extends HTMLElement {
-  connectedCallback() {
+  prevMenu = null;
 
+  connectedCallback() {
     this.burgerIcon = this.querySelector(".nav__icon--burger");
     this.closeIcon = this.querySelector(".nav__icon--close");
     this.shopButton = this.querySelector(".nav__link--Shop");
     this.closeIconDesktop = this.querySelector(".nav__icon--close--desktop");
     this.desktopWrapper = this.querySelector(".sidebar-nav-overlay--desktop");
     this.links = this.querySelectorAll(".js-sidebar-nav__link");
-    this.backButtons = this.querySelectorAll(".js-secondary-menu__top-bar--back");
-    this.closeButtons = document.querySelectorAll(".js-secondary-menu__top-bar--close");
+    this.backButtons = this.querySelectorAll(
+      ".js-secondary-menu__top-bar--back"
+    );
+    this.closeButtons = document.querySelectorAll(
+      ".js-secondary-menu__top-bar--close"
+    );
+
+    this.linksDesktop = document.querySelectorAll(
+      ".js-sidebar-nav-desktop__link"
+    );
 
     this.addEventListeners();
   }
@@ -120,19 +129,29 @@ class SidebarToggle extends HTMLElement {
 
   addEventListeners() {
     this.toggleIconsClasses = () => {
-      this.querySelector(".sidebar-nav-wrapper--mobile").classList.toggle("nav-active");
+      this.querySelector(".sidebar-nav-wrapper--mobile").classList.toggle(
+        "nav-active"
+      );
       const icons = this.querySelectorAll(".nav__icon");
       icons.forEach((icon) => icon.classList.toggle("nav__icon--js-hidden"));
     };
 
     this.openNav = () => {
       this.querySelector("#sidebar-menu-desktop").style.left = "0";
-      this.querySelector("#sidebar-nav-overlay--desktop").style.display = "block";
+      this.querySelector("#sidebar-nav-overlay--desktop").style.display =
+        "block";
     };
 
     this.closeNav = () => {
       this.querySelector("#sidebar-menu-desktop").style.left = "-100%";
-      this.querySelector("#sidebar-nav-overlay--desktop").style.display = "none";
+      this.querySelector("#sidebar-nav-overlay--desktop").style.display =
+        "none";
+      this.querySelector(".js-sidebar-nav-wrapper--desktop").classList.remove(
+        "nav-active"
+      );
+      this.prevMenu.nextElementSibling.classList.remove(
+        "secondary-menu-desktop-open"
+      );
     };
 
     this.burgerIcon.addEventListener("click", (event) => {
@@ -149,18 +168,18 @@ class SidebarToggle extends HTMLElement {
     this.shopButton.addEventListener("click", (event) => {
       event.preventDefault();
       this.openNav();
-      this.querySelector(".sidebar-nav-wrapper--desktop").classList.toggle("nav-active");
+      this.querySelector(".js-sidebar-nav-wrapper--desktop").classList.toggle(
+        "nav-active"
+      );
     });
 
     this.closeIconDesktop.addEventListener("click", (event) => {
       event.preventDefault();
       this.closeNav();
-      this.querySelector(".sidebar-nav-wrapper--desktop").classList.toggle("nav-active");
     });
 
     this.desktopWrapper.addEventListener("click", () => {
       this.closeNav();
-      this.querySelector(".sidebar-nav-wrapper--desktop").classList.remove("nav-active");
     });
 
     this.links.forEach((link) =>
@@ -174,7 +193,9 @@ class SidebarToggle extends HTMLElement {
       backButton.addEventListener("click", (event) => {
         event.preventDefault();
         event.stopPropagation();
-        document.querySelector(".secondary-menu-open").classList.toggle("secondary-menu-open");
+        document
+          .querySelector(".secondary-menu-open")
+          .classList.toggle("secondary-menu-open");
       })
     );
 
@@ -184,6 +205,22 @@ class SidebarToggle extends HTMLElement {
         this.toggleIconsClasses();
       })
     );
+
+    this.linksDesktop.forEach((linkDesktop) => {
+      linkDesktop.addEventListener("click", (event) => {
+        event.preventDefault();
+        if (this.prevMenu !== null) {
+          this.prevMenu.nextElementSibling.classList.remove(
+            "secondary-menu-desktop-open"
+          );
+          this.prevMenu = null;
+        }
+        linkDesktop.nextElementSibling.classList.add(
+          "secondary-menu-desktop-open"
+        );
+        this.prevMenu = linkDesktop;
+      });
+    });
   }
 
   removeEventListeners() {
@@ -204,7 +241,9 @@ class SidebarToggle extends HTMLElement {
       backButton.removeEventListener("click", (event) => {
         event.preventDefault();
         event.stopPropagation();
-        document.querySelector(".secondary-menu-open").classList.toggle("secondary-menu-open");
+        document
+          .querySelector(".secondary-menu-open")
+          .classList.toggle("secondary-menu-open");
       })
     );
 
@@ -214,6 +253,22 @@ class SidebarToggle extends HTMLElement {
         this.toggleIconsClasses();
       })
     );
+
+    this.linksDesktop.forEach((linkDesktop) => {
+      linkDesktop.removeEventListener("click", (event) => {
+        event.preventDefault();
+        if (this.prevMenu !== null) {
+          this.prevMenu.nextElementSibling.classList.remove(
+            "secondary-menu-desktop-open"
+          );
+          this.prevMenu = null;
+        }
+        linkDesktop.nextElementSibling.classList.add(
+          "secondary-menu-desktop-open"
+        );
+        this.prevMenu = linkDesktop;
+      });
+    });
   }
 }
 

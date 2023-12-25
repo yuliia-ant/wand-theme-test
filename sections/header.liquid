@@ -96,7 +96,7 @@
       </ul>
     </div>
   </div>
-  <div class="sidebar-nav-wrapper--desktop">
+  <div class="sidebar-nav-wrapper--desktop js-sidebar-nav-wrapper--desktop">
     <div class="sidebar-desktop" id="sidebar-menu-desktop">
       <div class="sidebar-nav-desktop">
         <div class="nav__icon nav__icon--close--desktop">
@@ -105,7 +105,10 @@
         <ul class="sidebar-nav-desktop__list">
           {% for link in linklists['sidebar-menu'].links %}
             <li class="sidebar-nav-desktop__item">
-              <a class="sidebar-nav-desktop__link" href="{{ link.url }}">
+              <a
+                class="sidebar-nav-desktop__link {% if link.links != blank %}js-sidebar-nav-desktop__link{% endif %}"
+                href="{{ link.url }}"
+              >
                 <div class="sidebar-nav-desktop__link-container">
                   {{ link.title }}
                   {% if link.links != blank %}
@@ -113,18 +116,18 @@
                   {% endif %}
                 </div>
               </a>
+              {% if link.links != blank %}
+                <ul class="secondary-menu-desktop js-secondary-menu-desktop">
+                  {% for child_link in link.links %}
+                    <li class="secondary-menu-desktop__item">
+                      <a href="{{ child_link.url }}" class="secondary-menu-desktop__link">
+                        {{- child_link.title -}}
+                      </a>
+                    </li>
+                  {% endfor %}
+                </ul>
+              {% endif %}
             </li>
-            {% if link.links != blank %}
-              <ul class="sidebar-nav-desktop__link__child-list hidden">
-                {% for child_link in link.links %}
-                  <li class="sidebar-nav-desktop__link__child-item">
-                    <a href="{{ child_link.url }}" class="sidebar-nav-desktop__link__child-link">
-                      {{- child_link.title -}}
-                    </a>
-                  </li>
-                {% endfor %}
-              </ul>
-            {% endif %}
           {% endfor %}
         </ul>
       </div>
@@ -145,6 +148,19 @@
 <script src="{{ 'section-header.js' | asset_url }}" defer></script>
 
 <script>
+  // let prevMenu = null;
+  // const linksDesktop = document.querySelectorAll('.js-sidebar-nav-desktop__link');
+  // linksDesktop.forEach((linkDesktop) => {
+  //   linkDesktop.addEventListener('click', (event) => {
+  //     event.preventDefault();
+  //     if (prevMenu !== null) {
+  //       prevMenu.nextElementSibling.classList.remove('secondary-menu-desktop-open');
+  //       prevMenu = null;
+  //     }
+  //     linkDesktop.nextElementSibling.classList.add('secondary-menu-desktop-open');
+  //     prevMenu = linkDesktop;
+  //   });
+  // });
   // const links = document.querySelectorAll('.js-sidebar-nav__link');
   // links.forEach((link) =>
   //   link.addEventListener('click', (event) => {
